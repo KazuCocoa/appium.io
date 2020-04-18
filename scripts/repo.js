@@ -95,7 +95,7 @@ function buildDocYML (sitemap, baseDir = '', levelCount = 0) {
 
 async function buildDocs (pathToDocs) {
   const mkdocsTemplate = Handlebars.compile(await fs.readFile(path.resolve(__dirname, '..', 'mkdocs.yml'), 'utf8'));
-  const themeDir = path.resolve(__dirname, '..', 'cinder/');
+  const themeDir = path.resolve(__dirname, '..', 'cinder');
   const sitemap = require(path.resolve(pathToDocs, 'toc.js'));
   log.debug(`Building HTML docs from Markdown ${pathToDocs}`);
   log.debug(`Theme directory is ${themeDir}`);
