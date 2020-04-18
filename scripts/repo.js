@@ -95,9 +95,11 @@ function buildDocYML (sitemap, baseDir = '', levelCount = 0) {
 
 async function buildDocs (pathToDocs) {
   const mkdocsTemplate = Handlebars.compile(await fs.readFile(path.resolve(__dirname, '..', 'mkdocs.yml'), 'utf8'));
-  const themeDir = path.resolve(__dirname, '..', 'cinder');
+  const themeDir = path.resolve(__dirname, '..', 'cinder/');
   const sitemap = require(path.resolve(pathToDocs, 'toc.js'));
   log.debug(`Building HTML docs from Markdown ${pathToDocs}`);
+  log.debug(`Theme directory is ${themeDir}`);
+  log.debug(`Site map is ${sitemap}`);
 
   // Build the MkDocs for each language
   for (const language of LANGUAGES) {
@@ -108,6 +110,7 @@ async function buildDocs (pathToDocs) {
 
     // Construct the mkdocs.yml file
     await fs.writeFile(path.resolve(pathToDocs, 'mkdocs.yml'), mkdocsTemplate({language, themeDir, toc, baseUrl}));
+    log.debug(`template: ${mkdocsTemplate({language, themeDir, toc, baseUrl})}`)
     const pathToBuildDocsTo = path.resolve(__dirname, '..', 'docs', language);
     try {
       const args = ['build', '--site-dir', pathToBuildDocsTo];
